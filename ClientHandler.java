@@ -1,0 +1,34 @@
+import java.io.*;
+import java.net.*;
+
+public class ClientHandler implements Runnable {
+    private Socket socket;
+    private PrintWriter out;
+    private BufferedReader in;
+
+    public ClientHandler(Socket socket) {
+        this.socket = socket;
+    }
+
+    @Override
+    public void run() {
+        try {
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+            
+            ChatServer.adicionarCliente(out);
+            out.println("Bem-vindo ao chat! Digite suas mensagens:");
+
+            String mensagem;
+            while ((mensagem = in.readLine()) != null) {
+                System.out.println("Recebido: " + mensagem);
+                ChatServer.broadcast("Cliente [" + socket.getPort() + "]: " + mensagem);
+            }
+        } catch (IOException e) {
+            System.out.println("Cliente desconectado.");
+        } finally {
+            if (out != null) ChatServer.removerCliente(out);
+            try { socket.close(); } catch (IOException e) { e.printStackTrace(); }
+        }
+    }
+}
