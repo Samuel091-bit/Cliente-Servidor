@@ -1,0 +1,28 @@
+# Arquivos compilados
+*.class
+
+# Diretórios de build e saídas
+bin/
+out/
+build/
+target/
+
+# Arquivos de IDEs (VS Code, Eclipse, IntelliJ, etc)
+.vscode/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# Arquivos empacotados
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Logs de erro do Java
+hs_err_pid*
+*.log
